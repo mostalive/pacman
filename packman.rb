@@ -51,6 +51,10 @@ class Field
     def down
         field[pacmanRow][pacmanColumn] = PACMANLOOKSDOWN
     end
+    
+    def up
+        field[pacmanRow][pacmanColumn] = PACMANLOOKSUP
+    end
 end
 
 class PacmanTest < Test::Unit::TestCase
@@ -141,6 +145,13 @@ class PacmanTest < Test::Unit::TestCase
         field.right
         assert_equal PACMANLOOKSRIGHT, field.in_field(1,1)
     end
+
+    def test_change_direction_up
+        field.down
+        field.up
+        assert_equal PACMANLOOKSUP, field.in_field(1,1)
+    end
+
     
     def assert_exactly_one_packman
         count = 0
