@@ -28,16 +28,14 @@ class Field
         field[pacmanRow][pacmanColumn] = PACMANWASHERE
         if currentDirection == PACMANLOOKSUP
             self.pacmanRow -= 1 
-            field[pacmanRow][pacmanColumn] = currentDirection
         end
         if currentDirection == PACMANLOOKSLEFT
             self.pacmanColumn -= 1 
-            field[pacmanRow][pacmanColumn] = currentDirection
         end  
         if currentDirection == PACMANLOOKSRIGHT
             self.pacmanColumn += 1 
-            field[pacmanRow][pacmanColumn] = currentDirection
         end     
+        field[pacmanRow][pacmanColumn] = currentDirection
     end
     
     def left
