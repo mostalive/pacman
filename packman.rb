@@ -3,8 +3,10 @@ require 'test/unit'
 
 PACMANLOOKSUP = 'V'
 PACMANLOOKSLEFT = '>'
+PACMANLOOKSRIGHT = '<'
 PACMANLOOKSDOWN = '^'
 PACMANWASHERE = ' '
+PACMANFACES = [PACMANLOOKSRIGHT, PACMANLOOKSDOWN, PACMANLOOKSLEFT, PACMANLOOKSUP ]
 
 class Field
     attr_accessor :field, :pacmanColumn, :pacmanRow    
@@ -38,9 +40,12 @@ class Field
         field[pacmanRow][1] = PACMANLOOKSLEFT
     end
     
+    def right
+        field[pacmanRow][1] = PACMANLOOKSRIGHT
+    end
     
     def down
-            field[pacmanRow][1] = PACMANLOOKSDOWN
+        field[pacmanRow][1] = PACMANLOOKSDOWN
     end
 end
 
@@ -101,12 +106,17 @@ class PacmanTest < Test::Unit::TestCase
         field.down
         assert_equal PACMANLOOKSDOWN, field.in_field(1,1)
     end
+
+    def test_change_direction_right
+        field.right
+        assert_equal PACMANLOOKSRIGHT, field.in_field(1,1)
+    end
     
     def assert_exactly_one_packman
         count = 0
         field.field.each { |row| 
             row.each { |cell|
-                if [ PACMANLOOKSDOWN, PACMANLOOKSLEFT, PACMANLOOKSUP ].include?(cell)
+                if PACMANFACES.include?(cell)
                     count +=1
                 end
             }   
