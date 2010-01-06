@@ -26,17 +26,16 @@ class Field
     def tick
         currentDirection = field[pacmanRow][pacmanColumn]
         field[pacmanRow][pacmanColumn] = PACMANWASHERE
-        if currentDirection == PACMANLOOKSUP
-            self.pacmanRow -= 1 
-        end
-        if currentDirection == PACMANLOOKSDOWN
-            self.pacmanRow += 1 
-        end
-        if currentDirection == PACMANLOOKSLEFT
-            self.pacmanColumn -= 1 
-        end  
-        if currentDirection == PACMANLOOKSRIGHT
-            self.pacmanColumn += 1 
+        
+        case currentDirection 
+            when PACMANLOOKSUP
+                self.pacmanRow -= 1 
+            when PACMANLOOKSDOWN
+                self.pacmanRow += 1 
+            when PACMANLOOKSLEFT
+                self.pacmanColumn -= 1 
+            when PACMANLOOKSRIGHT
+                self.pacmanColumn += 1 
         end     
         field[pacmanRow][pacmanColumn] = currentDirection
     end
