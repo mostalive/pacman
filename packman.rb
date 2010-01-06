@@ -29,6 +29,9 @@ class Field
         if currentDirection == PACMANLOOKSUP
             self.pacmanRow -= 1 
         end
+        if currentDirection == PACMANLOOKSDOWN
+            self.pacmanRow += 1 
+        end
         if currentDirection == PACMANLOOKSLEFT
             self.pacmanColumn -= 1 
         end  
@@ -89,7 +92,14 @@ class PacmanTest < Test::Unit::TestCase
         assert_equal PACMANLOOKSLEFT, field.in_field(0,0)
     end
     
-    def test_t
+    def test_pacman_moves_up_and_back_again
+        field.down
+        field.tick
+        
+        assert_equal PACMANLOOKSDOWN, field.in_field(2,1)
+    end
+
+    def test_pacman_moves_left_and_back_again
         field.left
         field.tick
         field.right
