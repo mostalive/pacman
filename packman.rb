@@ -6,13 +6,14 @@ PACMANLOOKSLEFT = '>'
 PACMANWASHERE = ' '
 
 class Field
-    attr_accessor :field, :pacmanRow    
+    attr_accessor :field, :pacmanColumn, :pacmanRow    
 
     def initialize
         self.field = [['.','.','.'],
-                  ['.','V','.'],
-                  ['.','.','.']]
+                      ['.','V','.'],
+                      ['.','.','.']]
         self.pacmanRow = 1
+        self.pacmanColumn = 1
     end
     
     def in_field(row, column)
@@ -20,9 +21,19 @@ class Field
     end
     
     def tick
-        field[pacmanRow][1] = PACMANWASHERE
-        self.pacmanRow -= 1 
-        field[pacmanRow][1] = PACMANLOOKSUP
+        
+        if field[pacmanRow][pacmanColumn] == PACMANLOOKSUP
+            field[pacmanRow][pacmanColumn] = PACMANWASHERE
+            self.pacmanRow -= 1 
+            field[pacmanRow][pacmanColumn] = PACMANLOOKSUP
+        end
+        
+        if field[pacmanRow][pacmanColumn] == PACMANLOOKSLEFT
+            field[pacmanRow][pacmanColumn] = PACMANWASHERE
+            self.pacmanColumn -= 1 
+            field[pacmanRow][pacmanColumn] = PACMANLOOKSLEFT
+        end
+        
     end
     
     def left
@@ -58,5 +69,13 @@ class PacmanTest < Test::Unit::TestCase
     def test_change_direction
         field.left
         assert_equal PACMANLOOKSLEFT, field.in_field(1,1)
+    end
+    
+    
+    def test_packman_moves_left
+        field.left
+        field.tick
+        assert_equal PACMANLOOKSLEFT, field.in_field(1,0)
+        assert_equal PACMANWASHERE, field.in_field(1,1)
     end
 end
