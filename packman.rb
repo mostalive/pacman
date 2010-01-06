@@ -33,19 +33,23 @@ class Field
         if currentDirection == PACMANLOOKSLEFT
             self.pacmanColumn -= 1 
             field[pacmanRow][pacmanColumn] = currentDirection
-        end        
+        end  
+        if currentDirection == PACMANLOOKSRIGHT
+            self.pacmanColumn += 1 
+            field[pacmanRow][pacmanColumn] = currentDirection
+        end     
     end
     
     def left
-        field[pacmanRow][1] = PACMANLOOKSLEFT
+        field[pacmanRow][pacmanColumn] = PACMANLOOKSLEFT
     end
     
     def right
-        field[pacmanRow][1] = PACMANLOOKSRIGHT
+        field[pacmanRow][pacmanColumn] = PACMANLOOKSRIGHT
     end
     
     def down
-        field[pacmanRow][1] = PACMANLOOKSDOWN
+        field[pacmanRow][pacmanColumn] = PACMANLOOKSDOWN
     end
 end
 
@@ -78,6 +82,25 @@ class PacmanTest < Test::Unit::TestCase
         assert_equal PACMANLOOKSUP, field.in_field(2,1)
         assert_equal PACMANWASHERE, field.in_field(0,1)
     end
+    
+    def test_tick_left_tick_check
+        field.tick
+        field.left
+        field.tick
+        
+        assert_equal PACMANLOOKSLEFT, field.in_field(0,0)
+    end
+    
+    def test_t
+        field.left
+        field.tick
+        field.right
+        field.tick
+        
+        assert_equal PACMANLOOKSRIGHT, field.in_field(1,1)
+    end
+    
+    
     
     def test_change_direction_left
         field.left
@@ -121,6 +144,6 @@ class PacmanTest < Test::Unit::TestCase
                 end
             }   
         }
-        assert_equal count, 1        
+        assert_equal 1, count        
     end
 end
